@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Delivery Information</h1>
+
+<style>
+
+    h1{
+        color: #333;
+        text-align: center;
+    }
+
+    .add-btn{
+        display: inline-block;
+        padding: 10px 20px;
+        background: #28a745;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .card{
+        background: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 10px;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .card h2{
+        color: #007bff;
+    }
+
+    .btn{
+        padding: 8px 15px;
+        text-decoration: none;
+        border-radius: 5px;
+        color: white;
+    }
+
+    .edit{
+        background: #007bff;
+    }
+
+    .delete{
+        background: #dc3545;
+    }
+
+</style>
+
+{% if user.is_authenticated %}
+
+<a class="add-btn" href="{% url 'add_delivery' %}">
+    Add Delivery
+</a>
+
+{% endif %}
+
+{% for delivery in deliveries %}
+
+<div class="card">
+
+    <h2>{{ delivery.name }}</h2>
+
+    <p><strong>Age:</strong> {{ delivery.age }}</p>
+
+    <p><strong>Gender:</strong> {{ delivery.gender }}</p>
+
+    <p><strong>City:</strong> {{ delivery.city }}</p>
+
+    <p>{{ delivery.description }}</p>
+
+    {% if user.is_authenticated %}
+
+    <a class="btn edit"
+       href="{% url 'edit_delivery' delivery.id %}">
+        Edit
+    </a>
+
+    <a class="btn delete"
+       href="{% url 'delete_delivery' delivery.id %}">
+        Delete
+    </a>
+
+    {% endif %}
+
+</div>
+
+{% endfor %}
+
+{% endblock %}
